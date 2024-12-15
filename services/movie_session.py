@@ -1,7 +1,5 @@
 from datetime import datetime
-from typing import List
-
-from django.utils.dateparse import parse_date
+from typing import Optional, List
 
 from db.models import CinemaHall, Movie, MovieSession
 
@@ -22,15 +20,13 @@ def get_movies_sessions(session_date: datetime = None) -> List[MovieSession]:
     """
     # If a session date is provided, parse it and filter sessions
     if session_date:
-        date = parse_date(session_date)
-        if date:
-            return MovieSession.objects.filter(show_time__date=date)
+        return MovieSession.objects.filter(show_time__date=session_date)
 
     # If no session date is provided, return all movie sessions
     return MovieSession.objects.all()
 
 
-def get_movie_session_by_id(movie_session_id: int) -> MovieSession:
+def get_movie_session_by_id(movie_session_id: int) -> Optional[MovieSession]:
     """
     Retrieve a movie session by its ID.
     """
@@ -43,7 +39,7 @@ def get_movie_session_by_id(movie_session_id: int) -> MovieSession:
 def update_movie_session(session_id: int,
                          show_time: datetime = None,
                          movie_id: int = None,
-                         cinema_hall_id: int = None) -> MovieSession:
+                         cinema_hall_id: int = None) -> Optional[MovieSession]:
     """
     Update a movie session's details by its ID.
     """

@@ -1,4 +1,4 @@
-from typing import List
+from typing import Optional, List
 
 from db.models import Actor, Genre, Movie
 
@@ -20,7 +20,7 @@ def get_movies(genres_ids: List[int] = None,
     return movies.distinct()
 
 
-def get_movie_by_id(movie_id: int) -> Movie:
+def get_movie_by_id(movie_id: int) -> Optional[Movie]:
     """
     Retrieve a movie by its ID.
     """
